@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistem Prediksi Jumlah Penduduk Sulawesi Utara</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- FONT POPPINS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- TAILWIND -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- TAILWIND CONFIG -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { poppins: ['Poppins', 'sans-serif'] },
+          colors: {
+            deep: '#03045e',
+            bright: '#0077b6',
+            turquoise: '#00b4d8',
+            frosted: '#90e0ef',
+            lightcyan: '#caf0f8'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- CHART.JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- JSPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="font-poppins bg-lightcyan text-deep">
+
+<!-- NAVBAR -->
+<header class="fixed top-0 left-0 w-full bg-white shadow z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+    <h1 class="font-semibold text-lg">Prediksi Penduduk</h1>
+
+    <nav class="hidden md:flex gap-8 text-sm font-medium">
+      <a href="#hero">Beranda</a>
+      <a href="#edukasi">Edukasi</a>
+      <a href="#data">Data</a>
+      <a href="#hasilAdmin">Prediksi</a>
+    </nav>
+
+    <button id="burgerBtn" class="md:hidden">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2"
+           viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobileMenu"
+       class="fixed top-0 right-0 w-64 h-full bg-white shadow transform translate-x-full transition-transform duration-300 md:hidden">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-lg font-semibold text-deep">Sistem Prediksi</h2>
+        <button id="closeBtn" class="text-gray-500 hover:text-gray-700 transition">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+      </div>
+      <nav class="space-y-4">
+        <a href="#hero" class="block py-2 px-4 rounded hover:bg-lightcyan transition" onclick="toggleMenu()">Beranda</a>
+        <a href="#edukasi" class="block py-2 px-4 rounded hover:bg-lightcyan transition" onclick="toggleMenu()">Edukasi</a>
+        <a href="#data" class="block py-2 px-4 rounded hover:bg-lightcyan transition" onclick="toggleMenu()">Data</a>
+        <a href="#hasilAdmin" class="block py-2 px-4 rounded hover:bg-lightcyan transition" onclick="toggleMenu()">Prediksi</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="hero"
+  class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24
+         bg-gradient-to-b from-lightcyan to-frosted">
+
+  <h2 class="text-3xl md:text-5xl font-bold max-w-3xl">
+    Sistem Prediksi Jumlah Penduduk<br>Sulawesi Utara
+  </h2>
+
+  <p class="mt-6 max-w-xl text-gray-700">
+    Sistem berbasis web menggunakan model Long Short-Term Memory (LSTM) untuk memprediksi jumlah penduduk berdasarkan data historis.
+  </p>
+
+  <div class="mt-8 flex flex-col sm:flex-row gap-4">
+    <a href="#prediksi" class="bg-bright text-white px-6 py-3 rounded hover:bg-turquoise transition">
+      Mulai Prediksi
+    </a>
+    <a href="#data" class="bg-white text-deep px-6 py-3 rounded border hover:bg-gray-50 transition">
+      Lihat Data
+    </a>
+  </div>
+</section>
+
+<!-- EDUKASI -->
+<section id="edukasi" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <h3 class="text-3xl font-semibold mb-12 text-center">Edukasi Prediksi Penduduk</h3>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-lightcyan rounded-xl p-6">
+        <h4 class="text-xl font-semibold mb-4">Apa itu LSTM?</h4>
+        <p class="text-gray-700">
+          Long Short-Term Memory (LSTM) adalah jenis jaringan saraf tiruan yang dirancang khusus untuk memproses dan memprediksi data berurutan seperti deret waktu.
+        </p>
+      </div>
+
+      <div class="bg-frosted rounded-xl p-6">
+        <h4 class="text-xl font-semibold mb-4">Mengapa Prediksi Penting?</h4>
+        <p class="text-gray-700">
+          Prediksi jumlah penduduk membantu pemerintah dalam perencanaan pembangunan, alokasi sumber daya, dan kebijakan sosial yang lebih efektif.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA -->
+<section id="data" class="py-24 bg-frosted">
+  <div class="max-w-6xl mx-auto px-6">
+    <h3 class="text-3xl font-semibold mb-8 text-center">Data Penduduk</h3>
+
+    <div class="overflow-x-auto bg-white rounded-xl shadow">
+      <table class="min-w-full text-sm text-center">
+        <thead class="bg-bright text-white">
+          <tr>
+            <th class="p-3">Tahun</th>
+            <th class="p-3">Jumlah</th>
+            <th class="p-3">LPP (%)</th>
+          </tr>
+        </thead>
+        <tbody id="dataTable"></tbody>
+      </table>
+    </div>
+
+    <div class="text-center mt-4">
+      <button id="toggleDataBtn" onclick="toggleDataView()"
+              class="bg-bright text-white px-4 py-2 rounded hover:bg-turquoise transition hidden">
+        Lihat Selengkapnya
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- PREDIKSI PENDUDUK -->
+<section id="hasilAdmin" class="py-24 bg-lightcyan">
+  <div class="max-w-6xl mx-auto px-6">
+    <h3 class="text-3xl font-semibold mb-8 text-center">Prediksi Penduduk</h3>
+
+    <div class="bg-white rounded-xl shadow p-6 mb-6">
+      <div class="relative h-96 mb-6">
+        <canvas id="chartAdminResult"></canvas>
+      </div>
+
+      <!-- EVALUASI -->
+      <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="bg-gray-50 rounded-xl p-4 text-center">
+          <h4 class="font-semibold mb-1 text-sm">MAPE (%)</h4>
+          <p id="mapeAdminResult" class="text-lg font-bold text-bright">-</p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-4 text-center">
+          <h4 class="font-semibold mb-1 text-sm">MAE</h4>
+          <p id="maeAdminResult" class="text-lg font-bold text-bright">-</p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-4 text-center">
+          <h4 class="font-semibold mb-1 text-sm">Akurasi (%)</h4>
+          <p id="akurasiAdminResult" class="text-lg font-bold text-bright">-</p>
+        </div>
+      </div>
+
+      <!-- DOWNLOAD -->
+      <div class="flex justify-center gap-4">
+        <button onclick="downloadPrediksiAdminCSV()" class="bg-bright text-white px-4 py-2 rounded hover:bg-turquoise transition flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Download CSV
+        </button>
+        <button onclick="downloadPrediksiAdminPDF()" class="bg-deep text-white px-4 py-2 rounded hover:opacity-90 transition flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Download PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREDIKSI USER -->
+<section id="prediksi" class="py-24 bg-white">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <h3 class="text-3xl font-semibold mb-6">Prediksi Jumlah Penduduk</h3>
+
+    <input type="number" id="tahunAkhir" min="2026" max="2040"
+           class="w-full max-w-md mx-auto p-3 border rounded mb-4"
+           placeholder="Contoh: 2030">
+
+    <button onclick="prediksiUser()"
+            class="bg-bright text-white px-6 py-3 rounded hover:bg-turquoise transition">
+      Prediksi
+    </button>
+
+    <div id="hasilPrediksi" class="hidden mt-12">
+      <div class="relative h-96">
+        <canvas id="chartUser"></canvas>
+      </div>
+
+      <div class="mt-6 text-sm">
+        <p>MAPE: <span id="mapeUser">-</span></p>
+        <p>MAE: <span id="maeUser">-</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="py-6 bg-deep text-white text-center text-sm">
+  © 2026 Sistem Prediksi Jumlah Penduduk Sulawesi Utara
+</footer>
+
+<script src="{{ url_for('static', filename='js/user.js') }}"></script>
+</body>
+</html>

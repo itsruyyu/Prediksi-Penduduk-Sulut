@@ -1,0 +1,212 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f4f6f9;
+    color: #2c2c2c;
+    min-height: 100vh;
+}
+
+/* =========================
+   CONTAINER UTAMA
+========================= */
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* =========================
+   HEADER
+========================= */
+h1 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: #6b7280;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* =========================
+   CARD INPUT
+========================= */
+.card {
+    width: 100%;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card label {
+    font-size: 0.9rem;
+    color: #374151;
+}
+
+.card input[type="file"],
+.card input[type="number"] {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.card button {
+    margin-top: 10px;
+    padding: 12px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.card button:hover {
+    background-color: #1d4ed8;
+}
+
+/* =========================
+   HASIL
+========================= */
+.hidden {
+    display: none;
+}
+
+#hasilSection {
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* =========================
+   OPSI
+========================= */
+.options {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.85rem;
+    color: #374151;
+}
+
+/* =========================
+   CHART
+========================= */
+.chart-container {
+    width: 100%;
+    height: 360px;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* =========================
+   EVALUASI
+========================= */
+.evaluasi {
+    display: flex;
+    justify-content: space-around;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    font-size: 0.9rem;
+}
+
+/* =========================
+   TABEL
+========================= */
+.table-container {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+thead {
+    background-color: #f1f5f9;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    font-weight: 500;
+}
+
+/* =========================
+   DOWNLOAD
+========================= */
+.download {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.download button {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    background-color: #10b981;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.download button:hover {
+    background-color: #059669;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .chart-container {
+        height: 300px;
+    }
+
+    .evaluasi {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .download {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
