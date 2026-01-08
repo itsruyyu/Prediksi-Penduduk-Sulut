@@ -70,6 +70,47 @@ async function uploadDatasetUser() {
     loadUploadedData();
 }
 
+/* UPLOAD DATASET ADMIN */
+async function uploadDatasetAdmin() {
+    const fileInput = document.getElementById("adminDataset");
+    if (!fileInput.files.length) {
+        alert("Silakan pilih dataset admin");
+        return;
+    }
+
+    const btn = document.querySelector('button[onclick="uploadDatasetAdmin()"]');
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<svg class="animate-spin w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Mengunggah & Melatih...';
+
+    // Tampilkan modal loading
+    document.getElementById("loadingModal").classList.remove("hidden");
+
+    const formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+
+    const res = await fetch("/api/upload_admin", {
+        method: "POST",
+        body: formData
+    });
+
+    // Sembunyikan modal loading
+    document.getElementById("loadingModal").classList.add("hidden");
+
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+
+    const data = await res.json();
+    if (res.status !== 200) {
+        alert(data.error);
+        return;
+    }
+
+    alert(data.message + (data.train_result ? "\n" + JSON.stringify(data.train_result, null, 2) : ""));
+    cekStatusModel();
+    loadUploadedData();  // Load data admin setelah upload
+}
+
 /* PREVIEW DATASET */
 function previewDataset() {
     loadUploadedData();
@@ -77,13 +118,14 @@ function previewDataset() {
 
 /* LOAD UPLOADED DATA */
 async function loadUploadedData() {
-    const res = await fetch("/api/data_user");
+    const res = await fetch("/api/data_admin");
     const data = await res.json();
     if (res.status !== 200) {
         alert("Data belum diunggah atau error: " + data.error);
         return;
     }
     renderUploadedTable(data);
+    renderDataChart(data);  // Tambahkan chart data aktual
     document.getElementById("dataTableContainer").classList.remove("hidden");
 }
 
@@ -96,6 +138,34 @@ function renderUploadedTable(data) {
     });
 }
 
+/* RENDER DATA CHART */
+function renderDataChart(data) {
+    const labels = data.map(d => d.Tahun);
+    const values = data.map(d => d.Jumlah);
+
+    const ctx = document.getElementById("chartAdmin").getContext("2d");
+    if (chartAdmin) chartAdmin.destroy();
+
+    chartAdmin = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Data Penduduk Aktual",
+                data: values,
+                borderColor: "rgb(75, 192, 192)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderWidth: 2,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
 /* TRAIN MODEL */
 async function trainModel() {
     const btn = document.querySelector('button[onclick="trainModel()"]');
@@ -103,8 +173,14 @@ async function trainModel() {
     btn.disabled = true;
     btn.innerHTML = '<svg class="animate-spin w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Melatih...';
 
+    // Tampilkan modal loading
+    document.getElementById("loadingModal").classList.remove("hidden");
+
     const res = await fetch("/api/train_model", { method: "POST" });
     const data = await res.json();
+
+    // Sembunyikan modal loading
+    document.getElementById("loadingModal").classList.add("hidden");
 
     btn.disabled = false;
     btn.innerHTML = originalText;

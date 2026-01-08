@@ -1,56 +1,132 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Login Admin</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Login Admin | Sistem Prediksi Penduduk</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- FONT POPPINS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- TAILWIND -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- TAILWIND CONFIG -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { poppins: ['Poppins', 'sans-serif'] },
+          colors: {
+            deep: '#03045e',
+            bright: '#0077b6',
+            turquoise: '#00b4d8',
+            frosted: '#90e0ef',
+            lightcyan: '#caf0f8'
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body>
 
-<div class="container">
+<body class="font-poppins min-h-screen bg-gradient-to-br from-lightcyan to-frosted flex items-center justify-center">
 
-    <h1>Login Admin</h1>
-    <p class="subtitle">Akses panel administrasi sistem prediksi</p>
+  <!-- CARD LOGIN -->
+  <div class="bg-white w-full max-w-md rounded-2xl shadow-xl p-8">
 
-    <div class="card">
-        <label>Username</label>
-        <input type="text" id="username">
-
-        <label>Password</label>
-        <input type="password" id="password">
-
-        <button onclick="login()">Login</button>
+    <!-- HEADER -->
+    <div class="text-center mb-8">
+      <h1 class="text-2xl font-bold text-deep">
+        Login Admin
+      </h1>
+      <p class="text-sm text-gray-600 mt-2">
+        Sistem Prediksi Jumlah Penduduk Sulawesi Utara
+      </p>
     </div>
 
-</div>
+    <!-- FORM -->
+    <form id="loginForm" class="space-y-5">
 
-<script>
-async function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+      <!-- USERNAME -->
+      <div>
+        <label class="block text-sm font-medium text-deep mb-1">
+          Username
+        </label>
+        <input
+          type="text"
+          id="username"
+          required
+          class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-bright"
+          placeholder="Masukkan username"
+        >
+      </div>
 
-    if (!username || !password) {
-        alert("Username dan password wajib diisi");
-        return;
-    }
+      <!-- PASSWORD -->
+      <div>
+        <label class="block text-sm font-medium text-deep mb-1">
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          required
+          class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-bright"
+          placeholder="Masukkan password"
+        >
+      </div>
 
-    const res = await fetch("/api/login", {
+      <!-- ERROR MESSAGE -->
+      <p id="errorMsg" class="text-sm text-red-500 hidden text-center"></p>
+
+      <!-- BUTTON -->
+      <button
+        type="submit"
+        class="w-full bg-bright text-white py-3 rounded-lg font-semibold hover:bg-turquoise transition duration-200"
+      >
+        Masuk
+      </button>
+    </form>
+
+    <!-- FOOTER -->
+    <div class="text-center text-xs text-gray-500 mt-6">
+      © 2026 Sistem Prediksi Penduduk
+    </div>
+
+  </div>
+
+  <!-- SCRIPT LOGIN -->
+  <script>
+    const form = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        window.location.href = "/admin";
+      } else {
+        errorMsg.innerText = data.error || "Login gagal";
+        errorMsg.classList.remove("hidden");
+      }
     });
-
-    const data = await res.json();
-    if (res.status !== 200) {
-        alert(data.error);
-        return;
-    }
-
-    window.location.href = "/admin";
-}
-</script>
+  </script>
 
 </body>
 </html>
+cl

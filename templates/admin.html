@@ -73,22 +73,16 @@
 
     <!-- UPLOAD DATASET -->
     <div class="mb-6">
-      <label class="block mb-2 font-medium">Unggah Dataset untuk Prediksi (CSV)</label>
+      <label class="block mb-2 font-medium">Unggah Dataset Training (CSV)</label>
       <div class="flex gap-2 mb-2">
-        <input type="file" id="userDataset" accept=".csv" class="border p-2 rounded flex-1">
-        <button onclick="uploadDatasetUser()" class="bg-bright text-white px-4 py-2 rounded hover:bg-turquoise transition flex items-center gap-1">
+        <input type="file" id="adminDataset" accept=".csv" class="border p-2 rounded flex-1">
+        <button onclick="uploadDatasetAdmin()" class="bg-bright text-white px-4 py-2 rounded hover:bg-turquoise transition flex items-center gap-1">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
           </svg>
-          Unggah
+          Unggah & Latih
         </button>
-        <button onclick="previewDataset()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition flex items-center gap-1">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-          </svg>
-          Preview
-        </button>
+      </div>
       </div>
       <p class="text-sm text-gray-600">Struktur dataset harus memiliki kolom: <strong>Tahun</strong>, <strong>Jumlah</strong>, <strong>Laju</strong>.</p>
     </div>
@@ -168,6 +162,15 @@
   </section>
 
 </main>
+
+<!-- MODAL LOADING -->
+<div id="loadingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-xl p-8 text-center max-w-sm mx-4">
+    <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-bright mx-auto mb-4"></div>
+    <h3 class="text-lg font-semibold mb-2">Sedang Melatih Model...</h3>
+    <p class="text-gray-600 text-sm">Mohon tunggu, proses pelatihan sedang berlangsung. Ini mungkin memakan waktu beberapa menit.</p>
+  </div>
+</div>
 
 <footer class="py-6 bg-deep text-white text-center text-sm">
   © 2026 Sistem Prediksi Jumlah Penduduk Sulawesi Utara

@@ -20,7 +20,7 @@ from utils import (
     load_scaler
 )
 
-# from train import train_lstm_model
+from train import train_lstm_model
 
 # Mock model for testing when TensorFlow is not available
 class MockModel:
@@ -48,6 +48,12 @@ MODEL_PATH = os.path.join(MODEL_DIR, "model_lstm.h5")
 SCALER_PATH = os.path.join(MODEL_DIR, "scaler.save")
 
 SEQ_LENGTH = 3
+
+# =========================================
+# KONSTANTA LOGIN ADMIN
+# =========================================
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "admin123"
 
 # =========================================
 # FUNGSI UTILITAS PREDIKSI ADMIN
@@ -169,17 +175,39 @@ def upload_admin():
     if file.filename == "":
         return jsonify({"error": "Nama file kosong"}), 400
 
+    # Simpan file sementara untuk validasi
+    temp_path = os.path.join(DATA_DIR, "temp_admin.csv")
     os.makedirs(DATA_DIR, exist_ok=True)
-    file.save(DATA_ADMIN_PATH)
+    file.save(temp_path)
 
-    return jsonify({"message": "Dataset admin berhasil diunggah"})
+    # Validasi dataset
+    try:
+        load_dataset(temp_path)
+    except Exception as e:
+        os.remove(temp_path)  # Hapus file temp jika gagal validasi
+        return jsonify({"error": f"Dataset tidak valid: {str(e)}"}), 400
+
+    # Jika valid, pindahkan ke path utama
+    os.replace(temp_path, DATA_ADMIN_PATH)
+
+    # Otomatis latih model setelah upload dataset baru
+    try:
+        train_result = train_lstm_model()
+        return jsonify({
+            "message": "Dataset admin berhasil diunggah dan model dilatih ulang",
+            "train_result": train_result
+        })
+    except Exception as e:
+        return jsonify({
+            "message": "Dataset admin berhasil diunggah, tetapi training gagal",
+            "error": str(e)
+        }), 500
 
 
 @app.route("/api/train_model", methods=["POST"])
 def api_train_model():
     try:
-        # result = train_lstm_model()
-        result = {"message": "Model training disabled"}
+        result = train_lstm_model()
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500

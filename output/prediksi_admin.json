@@ -2,68 +2,68 @@
     "prediksi": [
         {
             "tahun": 2026,
-            "jumlah": 2764
+            "jumlah": 2369
         },
         {
             "tahun": 2027,
-            "jumlah": 2790
+            "jumlah": 2413
         },
         {
             "tahun": 2028,
-            "jumlah": 2813
+            "jumlah": 2382
         },
         {
             "tahun": 2029,
-            "jumlah": 2831
+            "jumlah": 2389
         },
         {
             "tahun": 2030,
-            "jumlah": 2844
+            "jumlah": 2398
         },
         {
             "tahun": 2031,
-            "jumlah": 2854
+            "jumlah": 2389
         },
         {
             "tahun": 2032,
-            "jumlah": 2863
+            "jumlah": 2394
         },
         {
             "tahun": 2033,
-            "jumlah": 2869
+            "jumlah": 2395
         },
         {
             "tahun": 2034,
-            "jumlah": 2873
+            "jumlah": 2393
         },
         {
             "tahun": 2035,
-            "jumlah": 2877
+            "jumlah": 2395
         },
         {
             "tahun": 2036,
-            "jumlah": 2880
+            "jumlah": 2396
         },
         {
             "tahun": 2037,
-            "jumlah": 2882
+            "jumlah": 2396
         },
         {
             "tahun": 2038,
-            "jumlah": 2884
+            "jumlah": 2396
         },
         {
             "tahun": 2039,
-            "jumlah": 2885
+            "jumlah": 2397
         },
         {
             "tahun": 2040,
-            "jumlah": 2886
+            "jumlah": 2397
         }
     ],
     "evaluasi": {
-        "MAE": 16.80830205502715,
-        "MAPE": 0.6990884799063645
+        "MAE": 3.2218238308004907,
+        "MAPE": 0.1634755483715622
     },
-    "timestamp": "2026-01-08 19:12:57.827800"
+    "timestamp": "2026-01-08 22:38:16.795258"
 }
